@@ -1,16 +1,15 @@
 import React from 'react';
-import Image from 'next/image';
+import { Code2, Wallet, Rocket } from 'lucide-react';
 
 interface StepCardProps {
   stepNumber: number;
   title: string;
   description: string;
-  iconPath: string;
-  iconAlt: string;
+  icon: React.ReactNode;
   showArrow?: boolean;
 }
 
-const StepCard: React.FC<StepCardProps> = ({ stepNumber, title, description, iconPath, iconAlt, showArrow = false }) => {
+const StepCard: React.FC<StepCardProps> = ({ stepNumber, title, description, icon, showArrow = false }) => {
   return (
     <div className="flex items-center">
       <div className="relative rounded-xl shadow-lg p-6 hover:scale-105 transition-transform duration-200 flex-1 group bg-transparent">
@@ -20,15 +19,10 @@ const StepCard: React.FC<StepCardProps> = ({ stepNumber, title, description, ico
         </div>
         
         {/* Icon */}
-        <div className="w-16 h-16 mx-auto mb-4">
-          <Image 
-            src={iconPath} 
-            alt={iconAlt}
-            width={64}
-            height={64}
-            className="w-full h-full object-contain"
-            aria-label={`Step ${stepNumber}: ${title}`}
-          />
+        <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-md">
+          <div className="text-white" aria-label={`Step ${stepNumber}: ${title}`}>
+            {icon}
+          </div>
         </div>
         
         {/* Content */}
@@ -56,22 +50,19 @@ const SetupLanding: React.FC = () => {
       stepNumber: 1,
       title: "Clone Template",
       description: "Get started with our pre-built Soroswap integration template",
-      iconPath: "/setupIcon1.png",
-      iconAlt: "Clone Template icon"
+      icon: <Code2 size={32} />
     },
     {
       stepNumber: 2,
       title: "Configure Wallet",
       description: "Set up Freighter wallet connection and Stellar network configuration",
-      iconPath: "/setupIcon2.jpg",
-      iconAlt: "Configure Wallet icon"
+      icon: <Wallet size={32} />
     },
     {
       stepNumber: 3,
       title: "Deploy & Launch",
       description: "Deploy your DeFi application with full Soroswap functionality",
-      iconPath: "/setupIcon3.png",
-      iconAlt: "Deploy & Launch icon"
+      icon: <Rocket size={32} />
     }
   ];
 
@@ -108,8 +99,7 @@ const SetupLanding: React.FC = () => {
               stepNumber={step.stepNumber}
               title={step.title}
               description={step.description}
-              iconPath={step.iconPath}
-              iconAlt={step.iconAlt}
+              icon={step.icon}
               showArrow={index < steps.length - 1}
             />
           ))}
